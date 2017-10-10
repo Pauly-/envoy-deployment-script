@@ -1,4 +1,4 @@
-@include('vendor/autoload')
+@include('vendor/autoload.php')
 
 @setup
     $dotenv = new Dotenv\Dotenv(__DIR__);
@@ -31,8 +31,11 @@
 @servers(['web' => $server])
 
 @task('init')
-    if [-f {{ $envPath }}]; then
-        if [! -d {{ $releasesPath }}]; then
+    if [ -f {{ $envPath }} ]; then
+        if [ -d {{ $path }}/current ]; then
+            rm -rf {{ $path }}/current
+        fi
+        if [ ! -d {{ $releasesPath }} ]; then
             cd {{ $path }}
 
             echo "Creating 'releases' directory..."
